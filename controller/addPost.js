@@ -38,7 +38,7 @@ const allJob = async (req, res) => {
         .skip((page - 1) * limit)
         .limit(limit)
         .sort({ [sortBy]: order === "latest" ? 1 : -1 });
-      let nos =   let nos = await JobPost.find().count();
+       let nos = await JobPost.find().count();
     return  res.send({ data: jobs, totalPages: Math.ceil(nos / limit) });
     }
   } catch (error) {
