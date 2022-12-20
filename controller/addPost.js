@@ -18,16 +18,16 @@ const allJob = async (req, res) => {
     language,
   } = req.query;
   try {
-    if (role) {
-      let jobs = await JobPost.find({ role: role })
+    if (language && role) {
+      let jobs = await JobPost.find({ language: language, role: role })
         .skip((page - 1) * limit)
         .limit(limit)
         .sort({ [sortBy]: order === "latest" ? 1 : -1 });
       let nos = jobs.length;
       return res.send({ data: jobs, totalPages: Math.ceil(nos / limit) });
-    } else if (language && role) {
-      console.log(language);
-      let jobs = await JobPost.find({ language: language, role: role })
+    } else if (role) {
+      // console.log(language);
+      let jobs = await JobPost.find({ role: role })
         .skip((page - 1) * limit)
         .limit(limit)
         .sort({ [sortBy]: order === "latest" ? 1 : -1 });
