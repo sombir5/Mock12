@@ -33,7 +33,15 @@ const allJob = async (req, res) => {
         .sort({ [sortBy]: order === "latest" ? 1 : -1 });
       let nos = jobs.length;
      return res.send({ data: jobs, totalPages: Math.ceil(nos / limit) });
-    } else {
+    } else if (language && role) {
+      console.log(language);
+      let jobs = await JobPost.find({ language: language,role:role })
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .sort({ [sortBy]: order === "latest" ? 1 : -1 });
+      let nos = jobs.length;
+      return res.send({ data: jobs, totalPages: Math.ceil(nos / limit) });
+    }else {
       let jobs = await JobPost.find({})
         .skip((page - 1) * limit)
         .limit(limit)
